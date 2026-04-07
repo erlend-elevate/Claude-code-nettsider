@@ -1,0 +1,196 @@
+---
+const serviceOptions = [
+  'Liten service',
+  'Stor service',
+  'EU-kontroll',
+  'Dekkskift',
+  'Hjulstilling',
+  'Bremser',
+  'AC-service',
+  'Diagnostikk',
+  'Lakk & karosseri',
+  'Elbil-service',
+  'Annet',
+];
+
+const timeSlots = [
+  '07:00', '07:30', '08:00', '08:30', '09:00', '09:30',
+  '10:00', '10:30', '11:00', '11:30', '12:00', '12:30',
+  '13:00', '13:30', '14:00', '14:30', '15:00', '15:30',
+];
+
+const brands = ['Toyota', 'Volkswagen', 'BMW', 'Mercedes', 'Audi', 'Volvo', 'Tesla', 'Hyundai', 'Kia', 'Skoda', 'Ford', 'Nissan', 'Mazda', 'Peugeot', 'Annet'];
+---
+
+<section id="booking" class="py-20 sm:py-28 bg-primary-dark relative overflow-hidden">
+  <!-- Decorative bg -->
+  <div class="absolute inset-0 opacity-5">
+    <div class="absolute top-0 right-0 w-96 h-96 bg-accent rounded-full blur-3xl"></div>
+    <div class="absolute bottom-0 left-0 w-72 h-72 bg-white rounded-full blur-3xl"></div>
+  </div>
+
+  <div class="relative max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- Section Header -->
+    <div class="text-center mb-12 animate-on-scroll">
+      <span class="inline-block text-accent font-semibold text-sm tracking-wider uppercase mb-3">Online booking</span>
+      <h2 class="font-heading text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-4">
+        Bestill time enkelt og raskt
+      </h2>
+      <p class="text-white/60 text-lg">
+        Fyll ut skjemaet under, så kontakter vi deg innen 24 timer for å bekrefte.
+      </p>
+    </div>
+
+    <!-- Booking Form -->
+    <div class="animate-on-scroll scale-in">
+      <div class="bg-white rounded-2xl shadow-2xl overflow-hidden">
+        <!-- Progress Bar -->
+        <div class="flex border-b border-border">
+          <div class="booking-step flex-1 py-4 px-3 text-center border-r border-border last:border-r-0 transition-all" data-step="1">
+            <div class="step-indicator w-8 h-8 mx-auto mb-1 rounded-full bg-accent text-white flex items-center justify-center text-sm font-bold">1</div>
+            <span class="text-xs font-medium text-text-muted hidden sm:block">Tjeneste</span>
+          </div>
+          <div class="booking-step flex-1 py-4 px-3 text-center border-r border-border last:border-r-0 transition-all" data-step="2">
+            <div class="step-indicator w-8 h-8 mx-auto mb-1 rounded-full bg-surface-alt text-text-muted flex items-center justify-center text-sm font-bold">2</div>
+            <span class="text-xs font-medium text-text-muted hidden sm:block">Bil</span>
+          </div>
+          <div class="booking-step flex-1 py-4 px-3 text-center border-r border-border last:border-r-0 transition-all" data-step="3">
+            <div class="step-indicator w-8 h-8 mx-auto mb-1 rounded-full bg-surface-alt text-text-muted flex items-center justify-center text-sm font-bold">3</div>
+            <span class="text-xs font-medium text-text-muted hidden sm:block">Tidspunkt</span>
+          </div>
+          <div class="booking-step flex-1 py-4 px-3 text-center transition-all" data-step="4">
+            <div class="step-indicator w-8 h-8 mx-auto mb-1 rounded-full bg-surface-alt text-text-muted flex items-center justify-center text-sm font-bold">4</div>
+            <span class="text-xs font-medium text-text-muted hidden sm:block">Kontakt</span>
+          </div>
+        </div>
+
+        <form id="booking-form" class="p-6 sm:p-8">
+          <!-- Step 1: Service -->
+          <div class="booking-panel" data-panel="1">
+            <h3 class="font-heading font-bold text-xl text-primary mb-4">Hvilken tjeneste trenger du?</h3>
+            <div class="grid sm:grid-cols-2 gap-3">
+              {serviceOptions.map((service) => (
+                <label class="flex items-center gap-3 p-3 rounded-xl border border-border hover:border-accent/30 hover:bg-accent/5 cursor-pointer transition-all">
+                  <input type="radio" name="booking-service" value={service} class="w-5 h-5 text-accent accent-accent" />
+                  <span class="font-medium text-sm">{service}</span>
+                </label>
+              ))}
+            </div>
+            <div class="mt-4">
+              <label class="block text-sm font-medium text-text-muted mb-2">Tilleggsinformasjon (valgfritt)</label>
+              <textarea name="booking-notes" rows="2" placeholder="Beskriv problemet eller ønsket tjeneste..." class="w-full px-4 py-3 rounded-xl border border-border bg-surface text-text focus:outline-none focus:ring-2 focus:ring-accent/30 focus:border-accent transition-all text-sm resize-none"></textarea>
+            </div>
+          </div>
+
+          <!-- Step 2: Car Info -->
+          <div class="booking-panel hidden" data-panel="2">
+            <h3 class="font-heading font-bold text-xl text-primary mb-4">Fortell oss om bilen din</h3>
+            <div class="grid sm:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-sm font-medium text-text-muted mb-2">Bilmerke *</label>
+                <select name="booking-brand" class="w-full px-4 py-3 rounded-xl border border-border bg-surface text-text focus:outline-none focus:ring-2 focus:ring-accent/30 focus:border-accent transition-all" required>
+                  <option value="">Velg merke</option>
+                  {brands.map((brand) => (
+                    <option value={brand}>{brand}</option>
+                  ))}
+                </select>
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-text-muted mb-2">Modell *</label>
+                <input type="text" name="booking-model" placeholder="f.eks. Golf, RAV4, Model 3" class="w-full px-4 py-3 rounded-xl border border-border bg-surface text-text focus:outline-none focus:ring-2 focus:ring-accent/30 focus:border-accent transition-all" required />
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-text-muted mb-2">Årsmodell</label>
+                <input type="number" name="booking-year" placeholder="f.eks. 2021" min="1990" max="2026" class="w-full px-4 py-3 rounded-xl border border-border bg-surface text-text focus:outline-none focus:ring-2 focus:ring-accent/30 focus:border-accent transition-all" />
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-text-muted mb-2">Registreringsnummer</label>
+                <input type="text" name="booking-reg" placeholder="AB 12345" class="w-full px-4 py-3 rounded-xl border border-border bg-surface text-text focus:outline-none focus:ring-2 focus:ring-accent/30 focus:border-accent transition-all uppercase" />
+              </div>
+            </div>
+          </div>
+
+          <!-- Step 3: Date & Time -->
+          <div class="booking-panel hidden" data-panel="3">
+            <h3 class="font-heading font-bold text-xl text-primary mb-4">Velg dato og tidspunkt</h3>
+            <div class="grid sm:grid-cols-2 gap-4 mb-4">
+              <div>
+                <label class="block text-sm font-medium text-text-muted mb-2">Ønsket dato *</label>
+                <input type="date" name="booking-date" class="w-full px-4 py-3 rounded-xl border border-border bg-surface text-text focus:outline-none focus:ring-2 focus:ring-accent/30 focus:border-accent transition-all" required />
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-text-muted mb-2">Ønsket tid *</label>
+                <select name="booking-time" class="w-full px-4 py-3 rounded-xl border border-border bg-surface text-text focus:outline-none focus:ring-2 focus:ring-accent/30 focus:border-accent transition-all" required>
+                  <option value="">Velg tidspunkt</option>
+                  {timeSlots.map((slot) => (
+                    <option value={slot}>{slot}</option>
+                  ))}
+                </select>
+              </div>
+            </div>
+            <p class="text-text-muted text-xs flex items-center gap-1.5">
+              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" />
+              </svg>
+              Vi bekrefter dato og tid via SMS/e-post innen 24 timer.
+            </p>
+          </div>
+
+          <!-- Step 4: Contact -->
+          <div class="booking-panel hidden" data-panel="4">
+            <h3 class="font-heading font-bold text-xl text-primary mb-4">Kontaktinformasjon</h3>
+            <div class="grid sm:grid-cols-2 gap-4">
+              <div class="sm:col-span-2">
+                <label class="block text-sm font-medium text-text-muted mb-2">Fullt navn *</label>
+                <input type="text" name="booking-name" placeholder="Ola Nordmann" class="w-full px-4 py-3 rounded-xl border border-border bg-surface text-text focus:outline-none focus:ring-2 focus:ring-accent/30 focus:border-accent transition-all" required />
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-text-muted mb-2">Telefon *</label>
+                <input type="tel" name="booking-phone" placeholder="400 00 000" class="w-full px-4 py-3 rounded-xl border border-border bg-surface text-text focus:outline-none focus:ring-2 focus:ring-accent/30 focus:border-accent transition-all" required />
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-text-muted mb-2">E-post *</label>
+                <input type="email" name="booking-email" placeholder="ola@eksempel.no" class="w-full px-4 py-3 rounded-xl border border-border bg-surface text-text focus:outline-none focus:ring-2 focus:ring-accent/30 focus:border-accent transition-all" required />
+              </div>
+            </div>
+            <label class="flex items-start gap-3 mt-4 cursor-pointer">
+              <input type="checkbox" name="booking-consent" class="mt-1 w-5 h-5 rounded text-accent accent-accent" required />
+              <span class="text-text-muted text-sm">Jeg godtar at Motorverk Bergen lagrer mine opplysninger for å behandle denne henvendelsen. Les vår <a href="#" class="text-accent underline">personvernpolicy</a>.</span>
+            </label>
+          </div>
+
+          <!-- Navigation Buttons -->
+          <div class="flex items-center justify-between mt-8 pt-6 border-t border-border">
+            <button type="button" id="booking-prev" class="hidden px-6 py-3 rounded-xl border border-border text-text-muted hover:text-primary hover:border-primary font-medium transition-all text-sm">
+              Tilbake
+            </button>
+            <div class="ml-auto flex gap-3">
+              <button type="button" id="booking-next" class="px-8 py-3 bg-accent hover:bg-accent-hover text-white font-bold rounded-xl transition-all btn-shine text-sm">
+                Neste steg
+              </button>
+              <button type="submit" id="booking-submit" class="hidden px-8 py-3 bg-success hover:bg-green-700 text-white font-bold rounded-xl transition-all text-sm">
+                Send bestilling
+              </button>
+            </div>
+          </div>
+        </form>
+
+        <!-- Success Message -->
+        <div id="booking-success" class="hidden p-8 sm:p-12 text-center">
+          <div class="w-16 h-16 mx-auto mb-4 bg-success/10 rounded-full flex items-center justify-center">
+            <svg class="w-8 h-8 text-success" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+            </svg>
+          </div>
+          <h3 class="font-heading font-bold text-2xl text-primary mb-2">Takk for din bestilling!</h3>
+          <p class="text-text-muted max-w-md mx-auto">
+            Vi har mottatt din forespørsel og vil bekrefte dato og tidspunkt via SMS eller e-post innen 24 timer.
+          </p>
+          <p class="text-text-muted text-sm mt-4">
+            Har du spørsmål? Ring oss på <a href="tel:+4755123456" class="text-accent font-semibold">55 12 34 56</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

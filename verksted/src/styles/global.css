@@ -1,0 +1,226 @@
+@import "tailwindcss";
+
+/* ─── Custom Theme ─────────────────────────────────────────────────── */
+@theme {
+  --color-primary: #1E3A5F;
+  --color-primary-dark: #0F2440;
+  --color-primary-light: #2A4F7A;
+  --color-accent: #F97316;
+  --color-accent-hover: #EA580C;
+  --color-surface: #F8FAFC;
+  --color-surface-alt: #F1F5F9;
+  --color-text: #0F172A;
+  --color-text-muted: #64748B;
+  --color-border: #E2E8F0;
+  --color-success: #059669;
+
+  --font-heading: 'Lexend', system-ui, sans-serif;
+  --font-body: 'Source Sans 3', system-ui, sans-serif;
+}
+
+/* ─── Base ─────────────────────────────────────────────────────────── */
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-body);
+  color: var(--color-text);
+  background: var(--color-surface);
+  line-height: 1.6;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  line-height: 1.2;
+}
+
+/* ─── Scroll Animations ───────────────────────────────────────────── */
+.animate-on-scroll {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.animate-on-scroll.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.animate-on-scroll.slide-left {
+  transform: translateX(-30px);
+}
+.animate-on-scroll.slide-left.is-visible {
+  transform: translateX(0);
+}
+
+.animate-on-scroll.slide-right {
+  transform: translateX(30px);
+}
+.animate-on-scroll.slide-right.is-visible {
+  transform: translateX(0);
+}
+
+.animate-on-scroll.scale-in {
+  transform: scale(0.95);
+}
+.animate-on-scroll.scale-in.is-visible {
+  transform: scale(1);
+}
+
+/* Stagger children */
+.stagger-children .animate-on-scroll:nth-child(1) { transition-delay: 0ms; }
+.stagger-children .animate-on-scroll:nth-child(2) { transition-delay: 100ms; }
+.stagger-children .animate-on-scroll:nth-child(3) { transition-delay: 200ms; }
+.stagger-children .animate-on-scroll:nth-child(4) { transition-delay: 300ms; }
+.stagger-children .animate-on-scroll:nth-child(5) { transition-delay: 400ms; }
+.stagger-children .animate-on-scroll:nth-child(6) { transition-delay: 500ms; }
+.stagger-children .animate-on-scroll:nth-child(7) { transition-delay: 600ms; }
+.stagger-children .animate-on-scroll:nth-child(8) { transition-delay: 700ms; }
+
+/* ─── Page Load Animation ─────────────────────────────────────────── */
+.hero-animate {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: heroFadeIn 0.8s ease forwards;
+}
+.hero-animate:nth-child(2) { animation-delay: 0.15s; }
+.hero-animate:nth-child(3) { animation-delay: 0.3s; }
+.hero-animate:nth-child(4) { animation-delay: 0.45s; }
+
+@keyframes heroFadeIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ─── Nav Transition ──────────────────────────────────────────────── */
+.nav-scrolled {
+  background: rgba(15, 36, 64, 0.97) !important;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* ─── Card Hover ──────────────────────────────────────────────────── */
+.card-hover {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.card-hover:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 40px rgba(15, 36, 64, 0.12);
+}
+
+/* ─── Button Shine Effect ─────────────────────────────────────────── */
+.btn-shine {
+  position: relative;
+  overflow: hidden;
+}
+.btn-shine::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    to right,
+    transparent,
+    rgba(255, 255, 255, 0.15),
+    transparent
+  );
+  transform: rotate(45deg) translateX(-100%);
+  transition: transform 0.6s ease;
+}
+.btn-shine:hover::after {
+  transform: rotate(45deg) translateX(100%);
+}
+
+/* ─── Counter Animation ───────────────────────────────────────────── */
+@keyframes countUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ─── Lightbox ────────────────────────────────────────────────────── */
+.lightbox-overlay {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+.lightbox-overlay.active {
+  opacity: 1;
+  pointer-events: all;
+}
+
+/* ─── Accordion ───────────────────────────────────────────────────── */
+.faq-answer {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease, padding 0.4s ease;
+}
+.faq-answer.open {
+  max-height: 500px;
+}
+
+/* ─── Carousel ────────────────────────────────────────────────────── */
+.carousel-track {
+  transition: transform 0.5s ease;
+}
+
+/* ─── Progress Steps ──────────────────────────────────────────────── */
+.step-indicator {
+  transition: all 0.3s ease;
+}
+.step-indicator.active {
+  background: var(--color-accent);
+  color: white;
+}
+.step-indicator.completed {
+  background: var(--color-success);
+  color: white;
+}
+
+/* ─── Loading Screen ──────────────────────────────────────────────── */
+.page-loader {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: var(--color-primary-dark);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+.page-loader.loaded {
+  opacity: 0;
+  visibility: hidden;
+}
+.loader-spinner {
+  width: 48px;
+  height: 48px;
+  border: 4px solid rgba(255, 255, 255, 0.2);
+  border-top-color: var(--color-accent);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ─── Custom Scrollbar ────────────────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-surface-alt);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-primary-light);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-primary);
+}
