@@ -1,0 +1,68 @@
+---
+const faqs = [
+  {
+    question: 'Må jeg bestille time på forhånd?',
+    answer: 'Vi anbefaler å bestille time for å sikre ledig kapasitet, men du er også velkommen til å ta kontakt for å høre om ledige tider. For EU-kontroll og dekkskift anbefaler vi å bestille minst en uke i forveien.',
+  },
+  {
+    question: 'Tilbyr dere lånebil?',
+    answer: 'Ja, vi har et begrenset antall lånebiler tilgjengelig. Ta kontakt i god tid for å reservere. For kortere oppdrag har vi et hyggelig venteområde med kaffe og Wi-Fi.',
+  },
+  {
+    question: 'Jobber dere med alle bilmerker?',
+    answer: 'Ja, vi er et merkesuavhengig verksted og jobber med alle bilmerker – inkludert elbiler og hybrider. Våre teknikere er sertifiserte og bruker godkjent diagnoseutstyr.',
+  },
+  {
+    question: 'Mister jeg nybilgarantien hvis jeg bruker dere?',
+    answer: 'Nei. I henhold til EU-regler kan du fritt velge verksted uten å miste fabrikkgarantien, så lenge vi bruker godkjente deler og følger serviceprogram. Vi dokumenterer alt grundig.',
+  },
+  {
+    question: 'Hva koster en EU-kontroll?',
+    answer: 'EU-kontroll hos oss koster 1 490 kr inkl. mva. Vi gir deg en digital rapport etter kontrollen og hjelper deg med eventuelle utbedringer til konkurransedyktige priser.',
+  },
+  {
+    question: 'Tilbyr dere dekkhotell?',
+    answer: 'Ja! Vi tilbyr dekkhotell med profesjonell lagring, vask og sjekk av dekkene dine mellom sesongene. Ta kontakt for priser og tilgjengelighet.',
+  },
+  {
+    question: 'Hvordan fungerer online booking?',
+    answer: 'Fyll ut vårt 4-stegs skjema med ønsket tjeneste, bilinformasjon, dato/tid og kontaktinfo. Vi bekrefter timen din innen 2 timer i åpningstiden via e-post eller telefon.',
+  },
+  {
+    question: 'Har dere garanti på arbeidet?',
+    answer: 'Ja, vi gir 24 måneders garanti på alt arbeid vi utfører, samt garanti på deler i henhold til produsentens vilkår. Din trygghet er vår prioritet.',
+  },
+];
+---
+
+<section id="faq" class="py-24 lg:py-32 bg-cream relative overflow-hidden">
+  <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+    <div class="text-center max-w-3xl mx-auto mb-16 scroll-animate">
+      <span class="inline-block px-4 py-1.5 bg-navy/10 text-navy font-semibold text-sm rounded-full mb-4">
+        FAQ
+      </span>
+      <h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-navy mb-6">
+        Ofte stilte spørsmål
+      </h2>
+      <p class="text-lg text-gray-500 leading-relaxed">
+        Finn svar på de vanligste spørsmålene våre kunder har.
+      </p>
+    </div>
+
+    <div class="space-y-3 stagger-children">
+      {faqs.map((faq, i) => (
+        <details class="faq-item group bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+          <summary class="flex items-center justify-between p-6 cursor-pointer list-none hover:bg-cream/50 transition-colors">
+            <span class="font-semibold text-navy pr-4">{faq.question}</span>
+            <svg class="w-5 h-5 text-gray-400 group-open:rotate-180 transition-transform flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+            </svg>
+          </summary>
+          <div class="px-6 pb-6 text-gray-500 leading-relaxed border-t border-gray-50 pt-4">
+            {faq.answer}
+          </div>
+        </details>
+      ))}
+    </div>
+  </div>
+</section>

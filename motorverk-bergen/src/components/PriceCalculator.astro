@@ -1,0 +1,103 @@
+---
+const services = [
+  { id: 'service', name: 'Service (liten)', price: 3490 },
+  { id: 'service-stor', name: 'Service (stor)', price: 5990 },
+  { id: 'eu-kontroll', name: 'EU-kontroll', price: 1490 },
+  { id: 'dekkskift', name: 'Dekkskift (4 hjul)', price: 690 },
+  { id: 'hjulstilling', name: 'Hjulstilling', price: 1290 },
+  { id: 'bremser-foran', name: 'Bremser foran (klosser)', price: 2490 },
+  { id: 'bremser-bak', name: 'Bremser bak (klosser)', price: 2290 },
+  { id: 'ac-service', name: 'AC-service', price: 1490 },
+  { id: 'diagnostikk', name: 'Diagnostikk', price: 990 },
+  { id: 'elbil-service', name: 'Elbil-service', price: 3990 },
+];
+---
+
+<section id="priser" class="py-24 lg:py-32 bg-white relative overflow-hidden">
+  <div class="absolute top-1/2 left-0 w-80 h-80 bg-orange/5 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2"></div>
+
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+    <div class="text-center max-w-3xl mx-auto mb-16 scroll-animate">
+      <span class="inline-block px-4 py-1.5 bg-orange/10 text-orange font-semibold text-sm rounded-full mb-4">
+        Priskalkulator
+      </span>
+      <h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-navy mb-6">
+        Transparent prising
+      </h2>
+      <p class="text-lg text-gray-500 leading-relaxed">
+        Velg tjenestene du trenger og se estimert pris med en gang. Ingen skjulte kostnader.
+      </p>
+    </div>
+
+    <div class="scroll-animate">
+      <div class="bg-cream/50 rounded-3xl p-6 sm:p-10 border border-gray-100 shadow-lg">
+        <div class="grid sm:grid-cols-2 gap-3 mb-8">
+          {services.map((service) => (
+            <label
+              class="price-item flex items-center justify-between p-4 bg-white rounded-xl cursor-pointer border-2 border-transparent hover:border-orange/30 transition-all group"
+              data-price={service.price}
+            >
+              <div class="flex items-center gap-3">
+                <input
+                  type="checkbox"
+                  name="services"
+                  value={service.id}
+                  class="w-5 h-5 rounded-md border-gray-300 text-orange focus:ring-orange accent-orange"
+                />
+                <span class="font-medium text-gray-700 group-hover:text-navy transition-colors">{service.name}</span>
+              </div>
+              <span class="font-bold text-navy whitespace-nowrap">{service.price.toLocaleString('nb-NO')} kr</span>
+            </label>
+          ))}
+        </div>
+
+        <!-- Total -->
+        <div class="border-t-2 border-dashed border-gray-200 pt-6">
+          <div class="flex items-center justify-between mb-4">
+            <span class="text-lg font-medium text-gray-500">Estimert totalpris:</span>
+            <span id="total-price" class="text-3xl font-extrabold text-navy">0 kr</span>
+          </div>
+          <p class="text-sm text-gray-400 mb-6">
+            * Prisene er veiledende og inkluderer mva. Endelig pris avhenger av bilmodell og omfang.
+          </p>
+          <a
+            href="#booking"
+            class="block w-full text-center px-8 py-4 bg-orange text-white font-bold rounded-2xl hover:bg-orange-dark transition-all shadow-lg shadow-orange/25 hover:shadow-orange/40 hover:-translate-y-0.5"
+          >
+            Bestill valgte tjenester
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  const checkboxes = document.querySelectorAll<HTMLInputElement>('.price-item input[type="checkbox"]');
+  const totalEl = document.getElementById('total-price');
+
+  function updateTotal() {
+    let total = 0;
+    checkboxes.forEach((cb) => {
+      if (cb.checked) {
+        const priceItem = cb.closest('.price-item');
+        total += parseInt(priceItem?.getAttribute('data-price') || '0');
+      }
+    });
+    if (totalEl) {
+      totalEl.textContent = total.toLocaleString('nb-NO') + ' kr';
+    }
+  }
+
+  checkboxes.forEach((cb) => {
+    cb.addEventListener('change', () => {
+      const label = cb.closest('.price-item');
+      if (cb.checked) {
+        label?.classList.add('border-orange', 'bg-orange/5');
+      } else {
+        label?.classList.remove('border-orange', 'bg-orange/5');
+      }
+      updateTotal();
+    });
+  });
+</script>

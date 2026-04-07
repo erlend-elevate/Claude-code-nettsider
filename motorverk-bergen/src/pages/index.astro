@@ -1,0 +1,51 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Navigation from '../components/Navigation.astro';
+import Hero from '../components/Hero.astro';
+import Services from '../components/Services.astro';
+import About from '../components/About.astro';
+import PriceCalculator from '../components/PriceCalculator.astro';
+import Gallery from '../components/Gallery.astro';
+import Reviews from '../components/Reviews.astro';
+import Booking from '../components/Booking.astro';
+import FAQ from '../components/FAQ.astro';
+import Contact from '../components/Contact.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<Layout title="Motorverk Bergen – Bilverksted i Bergen | Service, EU-kontroll, Elbil">
+  <Navigation />
+  <main>
+    <Hero />
+    <Services />
+    <About />
+    <PriceCalculator />
+    <Gallery />
+    <Reviews />
+    <Booking />
+    <FAQ />
+    <Contact />
+  </main>
+  <Footer />
+</Layout>
+
+<script>
+  // Scroll animation observer
+  const observerOptions = {
+    threshold: 0.1,
+    rootMargin: '0px 0px -50px 0px',
+  };
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, observerOptions);
+
+  document.querySelectorAll('.scroll-animate, .scroll-animate-left, .scroll-animate-right, .stagger-children').forEach((el) => {
+    observer.observe(el);
+  });
+</script>
