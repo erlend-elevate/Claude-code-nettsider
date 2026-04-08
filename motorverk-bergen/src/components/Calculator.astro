@@ -1,0 +1,104 @@
+<section id="kalkulator" class="py-24 bg-cream relative">
+  <div class="max-w-4xl mx-auto px-6">
+    <div class="text-center mb-12 reveal">
+      <span class="inline-block bg-orange/10 text-orange font-heading font-semibold text-sm px-4 py-1.5 rounded-full mb-4">Priskalkulator</span>
+      <h2 class="font-heading font-bold text-3xl sm:text-4xl lg:text-5xl text-navy mb-4">
+        Beregn din pris
+      </h2>
+      <p class="text-muted text-lg max-w-2xl mx-auto">
+        Få et uforpliktende prisestimat basert på tjeneste og kjøretøy. Endelig pris avtales ved verkstedet.
+      </p>
+    </div>
+
+    <div class="reveal bg-white rounded-3xl shadow-lg border border-border p-8 sm:p-10">
+      <form id="calc-form" class="space-y-6">
+        <!-- Service type -->
+        <div>
+          <label for="calc-service" class="block font-heading font-semibold text-navy text-sm mb-2">Velg tjeneste</label>
+          <select id="calc-service" class="w-full px-4 py-3 rounded-xl border border-border bg-cream text-text font-body focus-visible:ring-2 focus-visible:ring-orange focus-visible:outline-none transition-colors duration-200 cursor-pointer">
+            <option value="">-- Velg tjeneste --</option>
+            <option value="1500">Liten service (fra kr 1 500)</option>
+            <option value="3500">Stor service (fra kr 3 500)</option>
+            <option value="1800">EU-kontroll (fra kr 1 800)</option>
+            <option value="800">Dekkskift (fra kr 800)</option>
+            <option value="1200">Hjulstilling (fra kr 1 200)</option>
+            <option value="2500">Bremseskift (fra kr 2 500)</option>
+            <option value="1200">AC-service (fra kr 1 200)</option>
+            <option value="900">Diagnostikk (fra kr 900)</option>
+            <option value="0">Lakk & karosseri (pris etter avtale)</option>
+            <option value="2000">Elbil-service (fra kr 2 000)</option>
+          </select>
+        </div>
+
+        <!-- Vehicle type -->
+        <div>
+          <label for="calc-vehicle" class="block font-heading font-semibold text-navy text-sm mb-2">Kjøretøytype</label>
+          <select id="calc-vehicle" class="w-full px-4 py-3 rounded-xl border border-border bg-cream text-text font-body focus-visible:ring-2 focus-visible:ring-orange focus-visible:outline-none transition-colors duration-200 cursor-pointer">
+            <option value="1">Personbil (bensin/diesel)</option>
+            <option value="1.15">Hybrid</option>
+            <option value="1.1">Elbil</option>
+            <option value="1.2">SUV / stor bil</option>
+          </select>
+        </div>
+
+        <!-- Extra services -->
+        <fieldset>
+          <legend class="font-heading font-semibold text-navy text-sm mb-3">Tilleggstjenester</legend>
+          <div class="grid sm:grid-cols-2 gap-3">
+            <label class="flex items-center gap-3 p-3 rounded-xl border border-border hover:border-orange/30 transition-colors duration-200 cursor-pointer">
+              <input type="checkbox" value="300" class="calc-extra w-4 h-4 text-orange rounded border-border focus-visible:ring-2 focus-visible:ring-orange cursor-pointer" />
+              <span class="text-sm text-text">Leiebil (+ kr 300/dag)</span>
+            </label>
+            <label class="flex items-center gap-3 p-3 rounded-xl border border-border hover:border-orange/30 transition-colors duration-200 cursor-pointer">
+              <input type="checkbox" value="200" class="calc-extra w-4 h-4 text-orange rounded border-border focus-visible:ring-2 focus-visible:ring-orange cursor-pointer" />
+              <span class="text-sm text-text">Henting/levering (+ kr 200)</span>
+            </label>
+            <label class="flex items-center gap-3 p-3 rounded-xl border border-border hover:border-orange/30 transition-colors duration-200 cursor-pointer">
+              <input type="checkbox" value="500" class="calc-extra w-4 h-4 text-orange rounded border-border focus-visible:ring-2 focus-visible:ring-orange cursor-pointer" />
+              <span class="text-sm text-text">Innvendig vask (+ kr 500)</span>
+            </label>
+            <label class="flex items-center gap-3 p-3 rounded-xl border border-border hover:border-orange/30 transition-colors duration-200 cursor-pointer">
+              <input type="checkbox" value="400" class="calc-extra w-4 h-4 text-orange rounded border-border focus-visible:ring-2 focus-visible:ring-orange cursor-pointer" />
+              <span class="text-sm text-text">Utvendig polering (+ kr 400)</span>
+            </label>
+          </div>
+        </fieldset>
+
+        <!-- Result -->
+        <div id="calc-result" class="bg-navy/5 rounded-2xl p-6 text-center hidden">
+          <p class="text-muted text-sm mb-1">Estimert pris fra</p>
+          <p class="font-heading font-bold text-4xl text-navy">kr <span id="calc-price">0</span></p>
+          <p class="text-muted text-xs mt-2">* Veiledende pris inkl. mva. Endelig pris kan variere.</p>
+        </div>
+
+        <button type="submit" class="w-full bg-orange hover:bg-orange-dark text-white font-heading font-bold text-lg py-4 rounded-2xl transition-colors duration-200 cursor-pointer shadow-lg shadow-orange/20">
+          Beregn pris
+        </button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<script>
+  const form = document.getElementById('calc-form') as HTMLFormElement;
+  form?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const service = parseInt((document.getElementById('calc-service') as HTMLSelectElement).value) || 0;
+    const vehicle = parseFloat((document.getElementById('calc-vehicle') as HTMLSelectElement).value) || 1;
+    const extras = Array.from(document.querySelectorAll('.calc-extra:checked'))
+      .reduce((sum, el) => sum + parseInt((el as HTMLInputElement).value), 0);
+
+    const total = Math.round(service * vehicle + extras);
+    const resultEl = document.getElementById('calc-result');
+    const priceEl = document.getElementById('calc-price');
+
+    if (resultEl && priceEl) {
+      if (service === 0) {
+        priceEl.textContent = 'Pris etter avtale';
+      } else {
+        priceEl.textContent = total.toLocaleString('nb-NO');
+      }
+      resultEl.classList.remove('hidden');
+    }
+  });
+</script>

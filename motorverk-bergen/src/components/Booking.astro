@@ -1,0 +1,258 @@
+<section id="booking" class="py-24 bg-cream relative">
+  <div class="max-w-3xl mx-auto px-6">
+    <div class="text-center mb-12 reveal">
+      <span class="inline-block bg-orange/10 text-orange font-heading font-semibold text-sm px-4 py-1.5 rounded-full mb-4">Online booking</span>
+      <h2 class="font-heading font-bold text-3xl sm:text-4xl lg:text-5xl text-navy mb-4">
+        Bestill time enkelt
+      </h2>
+      <p class="text-muted text-lg max-w-2xl mx-auto">
+        Fyll ut skjemaet under, så bekrefter vi timen din innen 2 timer.
+      </p>
+    </div>
+
+    <div class="reveal bg-white rounded-3xl shadow-lg border border-border p-8 sm:p-10">
+      <!-- Step indicators -->
+      <div class="flex items-center justify-between mb-10">
+        <div class="flex items-center gap-2 flex-1" id="step-indicators">
+          {['Tjeneste', 'Bil', 'Dato/tid', 'Kontakt'].map((label, i) => (
+            <div class="flex items-center flex-1" data-step-indicator={i + 1}>
+              <div class:list={[
+                "step-dot w-9 h-9 rounded-full flex items-center justify-center font-heading font-bold text-sm shrink-0 transition-all duration-300",
+                i === 0 ? "bg-orange text-white" : "bg-navy/10 text-navy/40"
+              ]}>
+                {i + 1}
+              </div>
+              <span class:list={[
+                "step-label hidden sm:block text-xs font-medium ml-2 transition-colors duration-300",
+                i === 0 ? "text-navy" : "text-muted"
+              ]}>{label}</span>
+              {i < 3 && <div class="flex-1 h-px bg-border mx-3"></div>}
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <form id="booking-form">
+        <!-- Step 1: Service -->
+        <div class="booking-step" data-step="1">
+          <h3 class="font-heading font-semibold text-navy text-xl mb-6">Hvilken tjeneste trenger du?</h3>
+          <div class="grid sm:grid-cols-2 gap-3">
+            {[
+              'Service & vedlikehold', 'EU-kontroll', 'Dekkskift & hjulstilling',
+              'Bremser', 'Klimaanlegg / AC', 'Diagnostikk', 'Lakk & karosseri', 'Elbil-service'
+            ].map(service => (
+              <label class="flex items-center gap-3 p-4 rounded-xl border border-border hover:border-orange/40 transition-all duration-200 cursor-pointer has-[:checked]:border-orange has-[:checked]:bg-orange/5">
+                <input type="radio" name="booking-service" value={service} class="w-4 h-4 text-orange border-border focus-visible:ring-2 focus-visible:ring-orange cursor-pointer" required />
+                <span class="text-sm text-text font-medium">{service}</span>
+              </label>
+            ))}
+          </div>
+        </div>
+
+        <!-- Step 2: Car info -->
+        <div class="booking-step hidden" data-step="2">
+          <h3 class="font-heading font-semibold text-navy text-xl mb-6">Informasjon om kjøretøyet</h3>
+          <div class="space-y-4">
+            <div>
+              <label for="book-reg" class="block font-heading font-semibold text-navy text-sm mb-2">Registreringsnummer</label>
+              <input type="text" id="book-reg" placeholder="AB 12345" class="w-full px-4 py-3 rounded-xl border border-border bg-cream text-text font-body focus-visible:ring-2 focus-visible:ring-orange focus-visible:outline-none transition-colors duration-200 uppercase" required />
+            </div>
+            <div class="grid sm:grid-cols-2 gap-4">
+              <div>
+                <label for="book-make" class="block font-heading font-semibold text-navy text-sm mb-2">Bilmerke</label>
+                <input type="text" id="book-make" placeholder="f.eks. Toyota" class="w-full px-4 py-3 rounded-xl border border-border bg-cream text-text font-body focus-visible:ring-2 focus-visible:ring-orange focus-visible:outline-none transition-colors duration-200" required />
+              </div>
+              <div>
+                <label for="book-model" class="block font-heading font-semibold text-navy text-sm mb-2">Modell</label>
+                <input type="text" id="book-model" placeholder="f.eks. RAV4" class="w-full px-4 py-3 rounded-xl border border-border bg-cream text-text font-body focus-visible:ring-2 focus-visible:ring-orange focus-visible:outline-none transition-colors duration-200" required />
+              </div>
+            </div>
+            <div class="grid sm:grid-cols-2 gap-4">
+              <div>
+                <label for="book-year" class="block font-heading font-semibold text-navy text-sm mb-2">Årsmodell</label>
+                <input type="number" id="book-year" placeholder="2022" min="1990" max="2027" class="w-full px-4 py-3 rounded-xl border border-border bg-cream text-text font-body focus-visible:ring-2 focus-visible:ring-orange focus-visible:outline-none transition-colors duration-200" required />
+              </div>
+              <div>
+                <label for="book-fuel" class="block font-heading font-semibold text-navy text-sm mb-2">Drivstoff</label>
+                <select id="book-fuel" class="w-full px-4 py-3 rounded-xl border border-border bg-cream text-text font-body focus-visible:ring-2 focus-visible:ring-orange focus-visible:outline-none transition-colors duration-200 cursor-pointer">
+                  <option value="bensin">Bensin</option>
+                  <option value="diesel">Diesel</option>
+                  <option value="hybrid">Hybrid</option>
+                  <option value="elbil">Elbil</option>
+                </select>
+              </div>
+            </div>
+            <div>
+              <label for="book-desc" class="block font-heading font-semibold text-navy text-sm mb-2">Beskriv problemet (valgfritt)</label>
+              <textarea id="book-desc" rows="3" placeholder="F.eks. rar lyd fra bremser, varsellampe lyser..." class="w-full px-4 py-3 rounded-xl border border-border bg-cream text-text font-body focus-visible:ring-2 focus-visible:ring-orange focus-visible:outline-none transition-colors duration-200 resize-none"></textarea>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 3: Date/time -->
+        <div class="booking-step hidden" data-step="3">
+          <h3 class="font-heading font-semibold text-navy text-xl mb-6">Velg dato og tid</h3>
+          <div class="grid sm:grid-cols-2 gap-4">
+            <div>
+              <label for="book-date" class="block font-heading font-semibold text-navy text-sm mb-2">Ønsket dato</label>
+              <input type="date" id="book-date" class="w-full px-4 py-3 rounded-xl border border-border bg-cream text-text font-body focus-visible:ring-2 focus-visible:ring-orange focus-visible:outline-none transition-colors duration-200 cursor-pointer" required />
+            </div>
+            <div>
+              <label for="book-time" class="block font-heading font-semibold text-navy text-sm mb-2">Ønsket tid</label>
+              <select id="book-time" class="w-full px-4 py-3 rounded-xl border border-border bg-cream text-text font-body focus-visible:ring-2 focus-visible:ring-orange focus-visible:outline-none transition-colors duration-200 cursor-pointer" required>
+                <option value="">-- Velg tid --</option>
+                <option value="07:00">07:00</option>
+                <option value="08:00">08:00</option>
+                <option value="09:00">09:00</option>
+                <option value="10:00">10:00</option>
+                <option value="11:00">11:00</option>
+                <option value="12:00">12:00</option>
+                <option value="13:00">13:00</option>
+                <option value="14:00">14:00</option>
+                <option value="15:00">15:00</option>
+                <option value="16:00">16:00</option>
+              </select>
+            </div>
+          </div>
+          <p class="text-muted text-xs mt-3">Vi er åpne mandag&ndash;fredag 07:00&ndash;17:00. Helger stengt.</p>
+        </div>
+
+        <!-- Step 4: Contact -->
+        <div class="booking-step hidden" data-step="4">
+          <h3 class="font-heading font-semibold text-navy text-xl mb-6">Dine kontaktopplysninger</h3>
+          <div class="space-y-4">
+            <div class="grid sm:grid-cols-2 gap-4">
+              <div>
+                <label for="book-name" class="block font-heading font-semibold text-navy text-sm mb-2">Fullt navn</label>
+                <input type="text" id="book-name" placeholder="Ola Nordmann" class="w-full px-4 py-3 rounded-xl border border-border bg-cream text-text font-body focus-visible:ring-2 focus-visible:ring-orange focus-visible:outline-none transition-colors duration-200" required />
+              </div>
+              <div>
+                <label for="book-phone" class="block font-heading font-semibold text-navy text-sm mb-2">Telefon</label>
+                <input type="tel" id="book-phone" placeholder="400 00 000" class="w-full px-4 py-3 rounded-xl border border-border bg-cream text-text font-body focus-visible:ring-2 focus-visible:ring-orange focus-visible:outline-none transition-colors duration-200" required />
+              </div>
+            </div>
+            <div>
+              <label for="book-email" class="block font-heading font-semibold text-navy text-sm mb-2">E-post</label>
+              <input type="email" id="book-email" placeholder="din@epost.no" class="w-full px-4 py-3 rounded-xl border border-border bg-cream text-text font-body focus-visible:ring-2 focus-visible:ring-orange focus-visible:outline-none transition-colors duration-200" required />
+            </div>
+          </div>
+        </div>
+
+        <!-- Success message -->
+        <div id="booking-success" class="hidden text-center py-8">
+          <div class="w-16 h-16 bg-green/10 rounded-full flex items-center justify-center mx-auto mb-4">
+            <svg class="w-8 h-8 text-green" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+            </svg>
+          </div>
+          <h3 class="font-heading font-bold text-navy text-2xl mb-2">Takk for din bestilling!</h3>
+          <p class="text-muted">Vi bekrefter timen din via e-post innen 2 timer.</p>
+        </div>
+
+        <!-- Navigation buttons -->
+        <div id="booking-nav" class="flex justify-between mt-8">
+          <button type="button" id="btn-prev" class="hidden px-6 py-3 rounded-xl border border-border text-navy font-heading font-semibold hover:bg-navy/5 transition-colors duration-200 cursor-pointer">
+            Tilbake
+          </button>
+          <button type="button" id="btn-next" class="ml-auto bg-orange hover:bg-orange-dark text-white font-heading font-bold px-8 py-3 rounded-xl transition-colors duration-200 cursor-pointer shadow-lg shadow-orange/20">
+            Neste steg
+          </button>
+          <button type="submit" id="btn-submit" class="hidden ml-auto bg-green hover:bg-green/90 text-white font-heading font-bold px-8 py-3 rounded-xl transition-colors duration-200 cursor-pointer shadow-lg shadow-green/20">
+            Send bestilling
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<script>
+  let currentStep = 1;
+  const totalSteps = 4;
+  const steps = document.querySelectorAll('.booking-step');
+  const btnPrev = document.getElementById('btn-prev') as HTMLButtonElement;
+  const btnNext = document.getElementById('btn-next') as HTMLButtonElement;
+  const btnSubmit = document.getElementById('btn-submit') as HTMLButtonElement;
+  const bookingNav = document.getElementById('booking-nav');
+  const successMsg = document.getElementById('booking-success');
+
+  function showStep(step: number) {
+    steps.forEach((el, i) => {
+      (el as HTMLElement).classList.toggle('hidden', i + 1 !== step);
+    });
+
+    // Update indicators
+    document.querySelectorAll('[data-step-indicator]').forEach(el => {
+      const s = parseInt(el.getAttribute('data-step-indicator')!);
+      const dot = el.querySelector('.step-dot')!;
+      const label = el.querySelector('.step-label');
+
+      if (s <= step) {
+        dot.className = 'step-dot w-9 h-9 rounded-full flex items-center justify-center font-heading font-bold text-sm shrink-0 transition-all duration-300 bg-orange text-white';
+        if (label) label.className = 'step-label hidden sm:block text-xs font-medium ml-2 transition-colors duration-300 text-navy';
+      } else {
+        dot.className = 'step-dot w-9 h-9 rounded-full flex items-center justify-center font-heading font-bold text-sm shrink-0 transition-all duration-300 bg-navy/10 text-navy/40';
+        if (label) label.className = 'step-label hidden sm:block text-xs font-medium ml-2 transition-colors duration-300 text-muted';
+      }
+    });
+
+    btnPrev?.classList.toggle('hidden', step === 1);
+    btnNext?.classList.toggle('hidden', step === totalSteps);
+    btnSubmit?.classList.toggle('hidden', step !== totalSteps);
+  }
+
+  function validateCurrentStep(): boolean {
+    const currentStepEl = document.querySelector(`.booking-step[data-step="${currentStep}"]`);
+    if (!currentStepEl) return true;
+
+    const requiredInputs = currentStepEl.querySelectorAll('[required]') as NodeListOf<HTMLInputElement>;
+    for (const input of requiredInputs) {
+      if (!input.checkValidity()) {
+        input.reportValidity();
+        return false;
+      }
+    }
+
+    if (currentStep === 1) {
+      const selected = currentStepEl.querySelector('input[name="booking-service"]:checked');
+      if (!selected) {
+        alert('Vennligst velg en tjeneste.');
+        return false;
+      }
+    }
+    return true;
+  }
+
+  btnNext?.addEventListener('click', () => {
+    if (!validateCurrentStep()) return;
+    if (currentStep < totalSteps) {
+      currentStep++;
+      showStep(currentStep);
+    }
+  });
+
+  btnPrev?.addEventListener('click', () => {
+    if (currentStep > 1) {
+      currentStep--;
+      showStep(currentStep);
+    }
+  });
+
+  document.getElementById('booking-form')?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    if (!validateCurrentStep()) return;
+
+    // Show success
+    steps.forEach(el => (el as HTMLElement).classList.add('hidden'));
+    bookingNav?.classList.add('hidden');
+    document.getElementById('step-indicators')?.classList.add('hidden');
+    successMsg?.classList.remove('hidden');
+  });
+
+  // Set min date to today
+  const dateInput = document.getElementById('book-date') as HTMLInputElement;
+  if (dateInput) {
+    const today = new Date().toISOString().split('T')[0];
+    dateInput.min = today;
+  }
+</script>

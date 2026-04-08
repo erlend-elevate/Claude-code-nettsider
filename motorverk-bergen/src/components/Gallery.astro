@@ -1,0 +1,42 @@
+---
+const images = [
+  { alt: 'Verkstedhallen med løftebukker', span: 'col-span-2 row-span-2' },
+  { alt: 'Mekaniker under bilservice', span: '' },
+  { alt: 'Moderne diagnoseutstyr', span: '' },
+  { alt: 'Dekkskift med balansering', span: 'col-span-2' },
+  { alt: 'Fornøyd kunde henter bil', span: '' },
+  { alt: 'Elbil på lading under service', span: '' },
+];
+---
+
+<section id="galleri" class="py-24 bg-white relative">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="text-center mb-12 reveal">
+      <span class="inline-block bg-orange/10 text-orange font-heading font-semibold text-sm px-4 py-1.5 rounded-full mb-4">Galleri</span>
+      <h2 class="font-heading font-bold text-3xl sm:text-4xl lg:text-5xl text-navy mb-4">
+        Fra vårt verksted
+      </h2>
+      <p class="text-muted text-lg max-w-2xl mx-auto">
+        Et innblikk i hverdagen hos Motorverk Bergen.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 reveal">
+      {images.map((img) => (
+        <div class={`${img.span} rounded-2xl bg-navy/5 border border-border overflow-hidden group cursor-pointer relative min-h-[200px]`}>
+          <div class="absolute inset-0 flex items-center justify-center">
+            <div class="text-center p-4">
+              <svg class="w-12 h-12 text-navy/15 mx-auto mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909M3.75 21h16.5A2.25 2.25 0 0022.5 18.75V5.25A2.25 2.25 0 0020.25 3H3.75A2.25 2.25 0 001.5 5.25v13.5A2.25 2.25 0 003.75 21z" />
+              </svg>
+              <p class="text-navy/30 text-xs">{img.alt}</p>
+            </div>
+          </div>
+          <div class="absolute inset-0 bg-navy/0 group-hover:bg-navy/40 transition-colors duration-300 flex items-end p-4 opacity-0 group-hover:opacity-100">
+            <p class="text-white text-sm font-medium">{img.alt}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
